@@ -1,0 +1,7 @@
+---
+- name: copy wifi.sh
+  template: src=wifi.sh dest=/tmp/wifi.sh mode=0770
+#  become: yes
+
+- name: ... execute it
+  command: sh /tmp/wifi.sh

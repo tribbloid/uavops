@@ -1,0 +1,7 @@
+---
+tmp_dir: '/tmp'
+
+wifi_ssid: 'Starbucks WiFi'
+wifi_pwd: ''
+
+firmware_url:
