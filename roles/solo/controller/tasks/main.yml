@@ -5,3 +5,7 @@
 
 - name: ... execute it
   command: sh /tmp/wifi.sh
+
+- name: Molecule Hello World!
+  debug:
+    msg: Hello, World!
