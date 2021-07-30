@@ -1,6 +1,7 @@
 all:
-#  vars:
-#    hadoop_master: "172.31.0.80" # always use internal IP
+  vars:
+    wifi_ssid: "aroma espresso bar"
+    wifi_pwd: ""
 
 controller:
   hosts: 10.1.1.1
