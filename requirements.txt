@@ -1,4 +1,6 @@
 # ---
 
+ansible
+ansible-lint
 molecule-docker
 docker-compose
