@@ -1,10 +1,17 @@
 ---
+- name: must have log dir
+  file:
+    path: /log
+    mode: 0777
+    state: directory
+
 - name: copy wifi.sh
   template: src=wifi.sh dest=/tmp/wifi.sh mode=0770
-#  become: yes
 
+  # become: yes
 - name: ... execute it
   command: sh /tmp/wifi.sh
+  # become: yes
 #  no-changed-when: false
 
 - name: Molecule Hello World!

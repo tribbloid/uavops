@@ -5,3 +5,6 @@
     - name: "solo wifi"
       include_role:
         name: "solo/controller/wifi"
+      vars:
+        wifi_ssid: "Starbucks WiFi"
+        wifi_pwd: ""
