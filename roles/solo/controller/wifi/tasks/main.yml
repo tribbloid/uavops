@@ -5,6 +5,7 @@
 
 - name: ... execute it
   command: sh /tmp/wifi.sh
+#  no-changed-when: false
 
 - name: Molecule Hello World!
   debug:

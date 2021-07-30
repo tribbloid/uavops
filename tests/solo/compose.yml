@@ -1,0 +1,49 @@
+---
+version: "3.9"
+
+services:
+  controller:
+    image: crops/poky
+    #    image: linuxserver/openssh-server
+    #    container_name: controller
+    stdin_open: true
+    environment:
+      #      - PUID=1000
+      #      - PGID=1000
+      #      - TZ=Europe/London
+      #      - PUBLIC_KEY=yourpublickey #optional
+      #      - PUBLIC_KEY_FILE=/path/to/file #optional
+      #      - PUBLIC_KEY_DIR=/path/to/directory/containing/_only_/pubkeys #optional
+      - SUDO_ACCESS=true #optional
+      - PASSWORD_ACCESS=true #optional
+      - USER_NAME=solo #optional
+      - USER_PASSWORD=solo #optional
+    #      - USER_PASSWORD_FILE=/path/to/file #optional
+    networks:
+      solo_lan:
+        ipv4_address: 10.1.1.2
+    volumes:
+      - ./solo/controller:/opt/solo/controller
+
+    restart: unless-stopped
+
+#  copter:
+#    #    image: crops/poky
+#    image: linuxserver/openssh-server
+#    #    container_name: copter
+#    stdin_open: true
+#    networks:
+#      solo_lan:
+#        ipv4_address: 10.1.1.10
+#    volumes:
+#      - ./solo/copter:/opt/solo/copter
+#
+#    restart: unless-stopped
+
+networks:
+  solo_lan:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: "10.1.1.0/24"

@@ -2,6 +2,6 @@
 - name: Converge
   hosts: all
   tasks:
-    - name: "Include controller"
+    - name: "solo wifi"
       include_role:
-        name: "controller"
+        name: "solo/controller/wifi"

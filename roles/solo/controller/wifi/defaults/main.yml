@@ -1,3 +1,5 @@
 ---
+# defaults file for solo
+
 wifi_ssid: 'Starbucks WiFi'
 wifi_pwd: ''

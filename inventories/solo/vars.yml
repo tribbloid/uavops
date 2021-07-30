@@ -1,0 +1,9 @@
+all:
+#  vars:
+#    hadoop_master: "172.31.0.80" # always use internal IP
+
+controller:
+  hosts: 10.1.1.1
+#copter:
+#  hosts:
+#    10.1.1.10

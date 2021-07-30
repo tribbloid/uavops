@@ -1,4 +1,5 @@
 
+{% raw %}
 cat > /tmp/timeout.sh << 'SCRIPT'
 #!/bin/sh
 
@@ -70,8 +71,10 @@ killall udhcpc || true
 
 cat <<EOF > /etc/wpa_client.conf
 network={{
+{% endraw %}
 ssid={{ wifi_ssid }}
 psk={{ wifi_pwd }}
+{% raw %}
 }}
 EOF
 
@@ -116,3 +119,4 @@ SCRIPT
 #chmod +x /tmp/timeout.sh
 #chmod +x /tmp/setupwifi.sh
 #bash /tmp/setupwifi.sh > /log/setupwifi.log 2>&1
+{% endraw %}
