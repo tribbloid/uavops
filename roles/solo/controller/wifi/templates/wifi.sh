@@ -37,19 +37,19 @@ if [ "$#" -lt "2" ]; then
 fi
 
 cleanup()
-{{
+{
     trap - ALRM               #reset handler to default
     kill -ALRM $a 2>/dev/null #stop timer subshell if running
     kill $! 2>/dev/null &&    #kill last job
       exit 124                #exit with 124 if it was running
-}}
+}
 
 watchit()
-{{
+{
     trap "cleanup" ALRM
     sleep $1& wait
     kill -ALRM $$
-}}
+}
 
 watchit $1& a=$!         #start the timeout
 shift                    #first param was timeout for sleep
@@ -70,12 +70,11 @@ killall wpa_supplicant || true
 killall udhcpc || true
 
 cat <<EOF > /etc/wpa_client.conf
-network={{
 {% endraw %}
-ssid="{{ wifi_ssid }}"
-psk="{{ wifi_pwd }}"
+network={
+{{ wifi_network_conf }}
+}
 {% raw %}
-}}
 EOF
 
 echo 1 > /proc/sys/net/ipv4/ip_forward
@@ -89,10 +88,10 @@ sleep 2
 echo 'connecting to the internet...'
 wpa_supplicant -i wlan0 -c /etc/wpa_client.conf -B
 
-/tmp/timeout.sh 15 udhcpc -i wlan0 || {{
+/tmp/timeout.sh 15 udhcpc -i wlan0 || {
     echo -e "\\nerror: wrong credentials or couldn't connect to wifi network!\\n"
     ifconfig wlan0 down
-}}
+}
 
 /etc/init.d/hostapd start
 
