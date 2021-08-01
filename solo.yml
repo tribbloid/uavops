@@ -1,0 +1,21 @@
+- hosts:
+    - controller
+  roles:
+    - solo/controller
+  tasks:
+    - wifi
+
+- hosts:
+    - copter
+  roles:
+    - solo/copter
+  tasks:
+    - upgrade-autopilot # Not needed if upgraded to latest 3DR commercial firmware
+    - upgrade-iMX
+
+- hosts:
+    - controller
+  roles:
+    - solo/controller
+  tasks:
+    - upgrade-iMX

@@ -13,7 +13,3 @@
   command: sh /tmp/wifi.sh
   # become: yes
 #  no-changed-when: false
-
-- name: Molecule Hello World!
-  debug:
-    msg: Hello, World!

@@ -4,10 +4,8 @@ all:
     wifi_network_conf: |
       ssid="REGUS"
       key_mgmt=NONE
-#      psk="{{ wifi_pwd }}"
 
 controller:
   hosts: root@10.1.1.1
-#copter:
-#  hosts:
-#    10.1.1.10
+copter:
+  hosts: root@10.1.1.10

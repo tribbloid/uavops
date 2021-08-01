@@ -1,0 +1,37 @@
+---
+- name: Download {{ iMX_file }}
+  block:
+    - local_action: get_url url={{ iMX_tar_URI }} dest="{{ tmp }}/{{ iMX_tar }}" force=no
+
+    - local_action: get_url url={{ iMX_md5_URI }} dest="{{ tmp }}/{{ iMX_md5 }}" force=no
+
+  become: false
+  register: result
+  until: result is success
+  retries: 3
+  delay: 2
+
+# TODO: ensure sololink_config exists
+
+- name: update-prepare
+  command: "sololink_config --update-prepare sololink"
+
+- name: copy to copter
+  block:
+    - copy:
+        src: "{{ tmp }}/{{ iMX_tar }}"
+        dest: "/log/updates/{{ iMX_tar }}"
+
+    - copy:
+        src: "{{ tmp }}/{{ iMX_md5 }}"
+        dest: "/log/updates/{{ iMX_md5 }}"
+
+  force: yes
+
+- name: update-apply
+  # command: "sololink_config --update-apply sololink --reset"
+  command: "sololink_config --update-apply sololink"
+
+- name: reboot to deploy (very slowly)
+  reboot:
+    reboot_timeout: 3600

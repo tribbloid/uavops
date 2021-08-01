@@ -1,2 +1,7 @@
-- hosts: controller
-  roles: solo/controller/wifi
+## TODO: do not use until https://stackoverflow.com/questions/68597458/ansible-playbook-search-for-roles-in-the-wrong-directory-how-to-correct-it
+
+# - hosts: controller
+#   roles: solo/controller/wifi
+
+# - hosts: copter
+#   roles: solo/copter/autopilot
