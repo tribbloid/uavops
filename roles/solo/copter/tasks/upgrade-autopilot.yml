@@ -1,6 +1,10 @@
 ---
 - name: Download {{ ArduCopter_File }}
-  local_action: get_url url={{ _ArduCopter_URI }} dest="{{ tmp }}/{{ ArduCopter_File }}" force=no
+  get_url:
+    url: "{{ _ArduCopter_URI }}"
+    dest: "{{ tmp }}/{{ ArduCopter_File }}"
+    force: no
+  delegate_to: localhost
   become: false
   register: result
   until: result is success
@@ -11,6 +15,7 @@
   copy:
     src: "{{ tmp }}/{{ ArduCopter_File }}"
     dest: "/firmware/{{ ArduCopter_File }}"
+    mode: 0660
     force: yes
 
 - name: reboot to deploy (very slowly)

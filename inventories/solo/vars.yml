@@ -5,7 +5,7 @@ all:
       ssid="REGUS"
       key_mgmt=NONE
 
-controller:
+solo-controller:
   hosts: root@10.1.1.1
-copter:
+solo-copter:
   hosts: root@10.1.1.10

@@ -1,9 +1,19 @@
 ---
 - name: Download {{ iMX_file }}
   block:
-    - local_action: get_url url={{ iMX_tar_URI }} dest="{{ tmp }}/{{ iMX_tar }}" force=no
+    - name: tar
+      get_url:
+        url: "{{ _iMX_tar_URI }}"
+        dest: "{{ tmp }}/{{ _iMX_tar }}"
+        force: no
+      delegate_to: localhost
 
-    - local_action: get_url url={{ iMX_md5_URI }} dest="{{ tmp }}/{{ iMX_md5 }}" force=no
+    - name: md5
+      get_url:
+        url: "{{ _iMX_md5_URI }}"
+        dest: "{{ tmp }}/{{ _iMX_md5 }}"
+        force: no
+      delegate_to: localhost
 
   become: false
   register: result
@@ -16,15 +26,19 @@
 - name: update-prepare
   command: "sololink_config --update-prepare sololink"
 
-- name: copy to copter
+- name: copy {{ iMX_file }}
   block:
-    - copy:
+    - name: tar
+      copy:
         src: "{{ tmp }}/{{ iMX_tar }}"
         dest: "/log/updates/{{ iMX_tar }}"
+        mode: 0660
 
-    - copy:
+    - name: md5
+      copy:
         src: "{{ tmp }}/{{ iMX_md5 }}"
         dest: "/log/updates/{{ iMX_md5 }}"
+        mode: 0660
 
   force: yes
 

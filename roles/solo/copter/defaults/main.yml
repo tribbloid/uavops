@@ -2,16 +2,14 @@
 # defaults file for solo
 
 vars:
-  OpenSolo_Release: https://github.com/OpenSolo/OpenSolo/releases/download/OpenSolo-4.0.0 # TODO: inherit from a parent role
+  # OpenSolo_Release: https://github.com/OpenSolo/OpenSolo/releases/download/OpenSolo-4.0.0 # TODO: inherit from a parent role
 
   ArduCopter_File: "ArduCopter.4.0.1.CubeSolo.apj"
 
   _ArduCopter_URI: "{{ OpenSolo_Release }}/{{ ArduCopter_File }}" # TODO: declare to be private var
 
   iMX_Name: "3dr-solo"
-
-  _iMX_tar: "{{ iMX_Name }}.tar.gz"
-  _iMX_md5: "{{ iMX_Name }}.md5"
-
-  _iMX_tar_URI: "{{ OpenSolo_Release }}/{{ _iMX_tar }}"
-  _iMX_md5_URI: "{{ OpenSolo_Release }}/{{ _iMX_md5 }}"
+  # _iMX_tar: "{{ iMX_Name }}.tar.gz"
+  # _iMX_md5: "{{ iMX_Name }}.md5"
+  # _iMX_tar_URI: "{{ OpenSolo_Release }}/{{ _iMX_tar }}"
+  # _iMX_md5_URI: "{{ OpenSolo_Release }}/{{ _iMX_md5 }}"

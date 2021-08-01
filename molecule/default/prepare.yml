@@ -1,0 +1,11 @@
+---
+- name: Prepare
+  hosts:
+    - solo-controller
+    - solo-copter
+  tasks:
+    - name: upload dummy sololink_config
+      template:
+        src: "sololink_config.sh"
+        dest: "/bin/sololink_config.sh"
+        mode: 0770
