@@ -1,5 +1,5 @@
 ---
-- name: must have log dir
+- name: must have dir
   file:
     path: /log
     mode: 0777

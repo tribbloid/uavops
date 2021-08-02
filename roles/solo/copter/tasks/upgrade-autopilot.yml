@@ -1,5 +1,9 @@
 ---
-- name: Download {{ ArduCopter_File }}
+- name: inherit
+  import_role:
+    name: solo/base
+
+- name: "Download {{ ArduCopter_File }}"
   get_url:
     url: "{{ _ArduCopter_URI }}"
     dest: "{{ tmp }}/{{ ArduCopter_File }}"
@@ -11,6 +15,12 @@
   retries: 3
   delay: 2
 
+- name: must have dir
+  file:
+    path: /firmware
+    mode: 0777
+    state: directory
+
 - name: copy to copter
   copy:
     src: "{{ tmp }}/{{ ArduCopter_File }}"
@@ -21,3 +31,5 @@
 - name: reboot to deploy (very slowly)
   reboot:
     reboot_timeout: 3600
+  tags:
+    - molecule-notest

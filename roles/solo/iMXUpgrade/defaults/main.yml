@@ -1,0 +1,12 @@
+---
+# defaults file for solo
+
+# OpenSolo_Release: https://github.com/OpenSolo/OpenSolo/releases/download/OpenSolo-4.0.0
+
+# iMX_Name: "3dr-solo"
+
+_iMX_tar: "{{ iMX_Name }}.tar.gz"
+_iMX_md5: "{{ _iMX_tar }}.md5"
+
+_iMX_tar_URI: "{{ OpenSolo_Release }}/{{ _iMX_tar }}"
+_iMX_md5_URI: "{{ OpenSolo_Release }}/{{ _iMX_md5 }}" ## TODO: simplify

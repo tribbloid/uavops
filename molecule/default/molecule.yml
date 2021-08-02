@@ -4,10 +4,16 @@
 driver:
   name: docker
 platforms:
-  - name: instance
-    image: docker.io/pycontribs/centos:8
+  - name: controller
+    image: jrei/systemd-fedora:latest
     # image: crops/poky
     pre_build_image: true
+
+  - name: copter
+    image: jrei/systemd-fedora:latest
+    # image: crops/poky
+    pre_build_image: true
+
 provisioner:
   name: ansible
   playbooks:

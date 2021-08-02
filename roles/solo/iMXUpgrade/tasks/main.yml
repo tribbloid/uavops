@@ -1,4 +1,8 @@
 ---
+- name: import vars
+  import_role:
+    name: solo/base
+
 - name: Download {{ iMX_file }}
   block:
     - name: tar
@@ -7,6 +11,11 @@
         dest: "{{ tmp }}/{{ _iMX_tar }}"
         force: no
       delegate_to: localhost
+      become: false
+      register: result
+      until: result is success
+      retries: 3
+      delay: 2 ## TODO: merge with below
 
     - name: md5
       get_url:
@@ -14,14 +23,17 @@
         dest: "{{ tmp }}/{{ _iMX_md5 }}"
         force: no
       delegate_to: localhost
+      become: false
+      register: result
+      until: result is success
+      retries: 3
+      delay: 2
 
-  become: false
-  register: result
-  until: result is success
-  retries: 3
-  delay: 2
-
-# TODO: ensure sololink_config exists
+- name: must have dir
+  file:
+    path: /log/updates
+    mode: 0777
+    state: directory
 
 - name: update-prepare
   command: "sololink_config --update-prepare sololink"
@@ -30,17 +42,17 @@
   block:
     - name: tar
       copy:
-        src: "{{ tmp }}/{{ iMX_tar }}"
-        dest: "/log/updates/{{ iMX_tar }}"
+        src: "{{ tmp }}/{{ _iMX_tar }}"
+        dest: "/log/updates/{{ _iMX_tar }}"
         mode: 0660
+        force: yes
 
     - name: md5
       copy:
-        src: "{{ tmp }}/{{ iMX_md5 }}"
-        dest: "/log/updates/{{ iMX_md5 }}"
+        src: "{{ tmp }}/{{ _iMX_md5 }}"
+        dest: "/log/updates/{{ _iMX_md5 }}"
         mode: 0660
-
-  force: yes
+        force: yes
 
 - name: update-apply
   # command: "sololink_config --update-apply sololink --reset"
@@ -49,3 +61,5 @@
 - name: reboot to deploy (very slowly)
   reboot:
     reboot_timeout: 3600
+  tags:
+    - molecule-notest
