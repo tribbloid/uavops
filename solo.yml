@@ -1,21 +1,38 @@
+---
 - hosts:
     - controller
-  roles:
-    - solo/controller
+  # roles:
+  #   - solo/controller
+  vars:
+    wifi_network_conf: |
+      ssid="REGUS"
+      key_mgmt=NONE
   tasks:
-    - wifi
+    - name: "wifi"
+      import_role:
+        name: solo/controller
+        tasks_from: wifi.yml
 
 - hosts:
     - copter
-  roles:
-    - solo/copter
+  # roles:
+  #   - solo/copter
   tasks:
-    - upgrade-autopilot # Not needed if upgraded to latest 3DR commercial firmware
-    - upgrade-iMX
+    - name: "upgrade-autopilot"
+      import_role:
+        name: solo/copter
+        tasks_from: upgrade-autopilot.yml
+    - name: "upgrade-iMX"
+      import_role:
+        name: solo/copter
+        tasks_from: upgrade-iMX.yml
 
 - hosts:
     - controller
-  roles:
-    - solo/controller
+  # roles:
+  #   - solo/controller
   tasks:
-    - upgrade-iMX
+    - name: "upgrade-iMX"
+      import_role:
+        name: solo/controller
+        tasks_from: upgrade-iMX.yml
