@@ -2,3 +2,8 @@
 - name: inherit
   import_role:
     name: solo/iMXUpgrade
+
+- name: Wait for reboot (copter only)
+  wait_for_connection:
+    delay: 15
+    timeout: 600

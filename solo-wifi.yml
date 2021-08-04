@@ -1,0 +1,10 @@
+---
+- hosts:
+    - controller
+  # roles:
+  #   - solo/controller
+  tasks:
+    - name: "wifi"
+      import_role:
+        name: solo/controller
+        tasks_from: wifi.yml

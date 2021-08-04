@@ -15,13 +15,33 @@
   retries: 3
   delay: 2
 
-- name: must have dir
+- name: must have bin dir
+  file:
+    path: /usr/bin
+    mode: 0777
+    state: directory
+
+- name: must have firmware dir
   file:
     path: /firmware
     mode: 0777
     state: directory
 
-- name: copy to copter
+- name: copy pixhawk.py
+  copy:
+    src: pixhawk.py
+    dest: /usr/bin/pixhawk.py
+    mode: 0770
+    force: yes
+
+- name: copy upgrader.py
+  copy:
+    src: uploader.py
+    dest: /usr/bin/uploader.py
+    mode: 0770
+    force: yes
+
+- name: copy {{ ArduCopter_File }}
   copy:
     src: "{{ tmp }}/{{ ArduCopter_File }}"
     dest: "/firmware/{{ ArduCopter_File }}"
@@ -30,6 +50,6 @@
 
 - name: reboot to deploy (very slowly)
   reboot:
-    reboot_timeout: 3600
+    reboot_timeout: 600
   tags:
     - molecule-notest

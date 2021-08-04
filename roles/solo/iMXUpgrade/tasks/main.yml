@@ -5,7 +5,7 @@
 
 - name: Download {{ iMX_file }}
   block:
-    - name: tar
+    - name: Download {{ _iMX_tar }}
       get_url:
         url: "{{ _iMX_tar_URI }}"
         dest: "{{ tmp }}/{{ _iMX_tar }}"
@@ -17,7 +17,7 @@
       retries: 3
       delay: 2 ## TODO: merge with below
 
-    - name: md5
+    - name: Download {{ _iMX_md5 }}
       get_url:
         url: "{{ _iMX_md5_URI }}"
         dest: "{{ tmp }}/{{ _iMX_md5 }}"
@@ -38,16 +38,23 @@
 - name: update-prepare
   command: "sololink_config --update-prepare sololink"
 
+## TODO: manually start controller
+
+- name: Wait for reboot
+  wait_for_connection:
+    delay: 15
+    timeout: 600
+
 - name: copy {{ iMX_file }}
   block:
-    - name: tar
+    - name: copy tar
       copy:
         src: "{{ tmp }}/{{ _iMX_tar }}"
         dest: "/log/updates/{{ _iMX_tar }}"
         mode: 0660
         force: yes
 
-    - name: md5
+    - name: copy md5
       copy:
         src: "{{ tmp }}/{{ _iMX_md5 }}"
         dest: "/log/updates/{{ _iMX_md5 }}"
@@ -56,10 +63,11 @@
 
 - name: update-apply
   # command: "sololink_config --update-apply sololink --reset"
-  command: "sololink_config --update-apply sololink"
+  command: "sololink_config --update-apply sololink --reset"
+## TODO: manually start controller
 
-- name: reboot to deploy (very slowly)
-  reboot:
-    reboot_timeout: 3600
-  tags:
-    - molecule-notest
+# - name: reboot to deploy (very slowly)
+#   reboot:
+#     reboot_timeout: 3600
+#   tags:
+#     - molecule-notest

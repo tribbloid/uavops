@@ -1,6 +1,6 @@
 ---
 # defaults file for solo
 
-tmp: /tmp/uavops
+tmp: ./tmp
 
 OpenSolo_Release: "https://github.com/OpenSolo/OpenSolo/releases/download/OpenSolo-4.0.0"
