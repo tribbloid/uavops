@@ -1,0 +1,14 @@
+---
+- hosts:
+    - copter
+  # roles:
+  #   - solo/copter
+  tasks:
+    - name: "upgrade-autopilot"
+      import_role:
+        name: solo/copter
+        tasks_from: upgrade-autopilot.yml
+    - name: "upgrade-iMX"
+      import_role:
+        name: solo/copter
+        tasks_from: upgrade-iMX.yml

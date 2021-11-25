@@ -70,4 +70,4 @@
 #   reboot:
 #     reboot_timeout: 3600
 #   tags:
-#     - molecule-notest
+#     - molecule-notest TODO: this should be removed? sololink --reset already rebooted the machine

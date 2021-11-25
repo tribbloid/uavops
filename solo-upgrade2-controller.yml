@@ -1,0 +1,10 @@
+---
+- hosts:
+    - controller
+  # roles:
+  #   - solo/controller
+  tasks:
+    - name: "upgrade-iMX"
+      import_role:
+        name: solo/controller
+        tasks_from: upgrade-iMX.yml

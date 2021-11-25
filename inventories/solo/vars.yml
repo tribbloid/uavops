@@ -2,10 +2,6 @@ all:
   vars:
     ansible_ssh_pass: TjSDBkAu
 
-    wifi_network_conf: |
-      ssid="aroma espresso bar"
-      key_mgmt=NONE
-
 controller:
   hosts: root@10.1.1.1
 copter:

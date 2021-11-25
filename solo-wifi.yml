@@ -3,6 +3,10 @@
     - controller
   # roles:
   #   - solo/controller
+  vars:
+    wifi_network_conf: |
+      ssid="aroma espresso bar"
+      key_mgmt=NONE
   tasks:
     - name: "wifi"
       import_role:
