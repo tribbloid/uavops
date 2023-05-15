@@ -10,6 +10,10 @@ This script will automatically download & deploy OpenSolo 4.0
 ./dev/compile.sh
 ```
 
+```commandline
+ansible-playbook ./solo-wifi.yml -i inventories/solo
+```
+
 make sure that the following files are downloaded and cached:
 
 ```
@@ -33,3 +37,16 @@ ansible-playbook ./solo-upgrade1-copter.yml -i inventories/solo
 ```
 ansible-playbook ./solo-upgrade2-controller.yml -i inventories/solo
 ```
+
+ssh password is:
+
+`TjSDBkAu`
+
+## Maintenance
+
+Do not run reboot or shutdown in ssh session! Will trigger a bug that caused controller to be suspended
+
+## Video
+
+https://3drpilots.com/threads/watching-solo-video-on-pc.1727/page-2
+

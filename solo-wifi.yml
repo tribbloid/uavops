@@ -5,8 +5,11 @@
   #   - solo/controller
   vars:
     wifi_network_conf: |
-      ssid="aroma espresso bar"
-      key_mgmt=NONE
+      ssid="UavGcs"
+      psk="C0xw3ll688"
+     
+#      ssid="Aroma"
+#      key_mgmt=NONE
   tasks:
     - name: "wifi"
       import_role:
