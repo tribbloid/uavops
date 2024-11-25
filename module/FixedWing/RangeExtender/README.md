@@ -11,6 +11,36 @@ We intend to ship a minimalistic range extender component for fixed wing UAVs, i
 
 The component can be activated by releasing 2 clutches simultaneously, thus allowing some tetherable cord to straighten under its own tension, which pushes the drone away from the balloon. The component can be wirelessly configured to be activated by the ARM navigation light indicator of the drone flight control (PX4 use flashing blue light) or barometer reading. Telemetry should be considered out of the scope.
 
+```mermaid
+flowchart TD
+    Start([Start]) --> PreFlight[Initialize Pre-flight Checks]
+    PreFlight --> CheckBatt{Battery OK?}
+
+    CheckBatt -->|No| FailSafe[Red Light, Fail-safe Mode]
+    CheckBatt -->|Yes| CheckPower{DC Power Unplugged?}
+
+    CheckPower -->|No| WaitPower[Wait for Unplugging]
+    WaitPower --> CheckPower
+    CheckPower -->|Yes, READY| CheckBaro{Barometer Reading \n above Altitude?}
+
+    CheckBaro -->|No| WaitBaro[Wait for Altitude,\n Telemetry Packet Out]
+    WaitBaro --> CheckBaro
+    CheckBaro -->|Yes| CheckLight{Navigation Light ARMED?}
+
+    CheckLight -->|No| WaitLight[Wait for ARM signal]
+    WaitLight --> CheckBaro
+    CheckLight -->|Yes, ARMED| CheckDuration{Telemetry packet out \n ARM signal cyclic \n for 5 seconds?}
+
+    CheckDuration -->|No| CheckLight
+    CheckDuration -->|Yes, LAUNCH| Release[Release \n Telemetry Packet Out]
+    Release --> End([Terminate, shutdown])
+
+    style Start fill:#85C1E9
+    style CheckBaro fill:#82E0AA
+    style CheckDuration fill:#EC7063
+    style FailSafe fill:#EC7063
+```
+
 The component should only maintain its wireless ethernet uplink on the ground, for scalable & over-the-air (OTA) customisation and firmware upgrade. ESP32, with its OTA memory direct write capability and high energy efficiency, is one of the reference single-board computer that can run the above logic, however, their wireless uplinks should be considered less reliable.
 
 As a mitigation, they can be connected in pairs using USB or I2C ports, if one of a pair failed sanity test after customisation or upgrade, it can be immediately rolled back by the other of the pair. This may eventually makes OTA write no longer required, and more system memory to be allocated to its main logic, as the interconnected pair can receive upgrade and supervise upload/rollback to the other while its own process is running.
